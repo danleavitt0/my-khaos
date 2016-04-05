@@ -1,14 +1,21 @@
 {
   "name": "{{basename}}",
   "description": "{{description}}",
-  "repository": "git://github.com/joshrtay/{{basename}}.git",
+  "repository": "git://github.com/danleavitt0/{{basename}}.git",
   "version": "0.1.0",
   "license": "MIT",
   "main": "lib/index.js",
   "scripts": {
-    "prepublish": "make build",
-    "postpublish": "make clean",
-    "postversion": "git push && git push --tags && npm publish --access=public"
+    "prepublish": "npm run build",
+    "postpublish": "npm run clean",
+    "postversion": "git push && git push --tags && npm publish --access=public",
+    "validate": "standard",
+    "clean": "rm -rf lib",
+    "build": "babel src --out-dir lib",
+    "init:git": "git init && git add --all && git commit -am 'FIRST' && git remote add origin https://danleavitt0@github.com/danleavitt0/{{basename}}.git && git push -u origin master ",
+    "init:travis": "travis enable",
+    "init": "npm install && npm run init:git && npm run init;travis",
+    "test": "tape -r babel-register -r babel-polyfill test/*"
   },
   "dependencies": {},
   "devDependencies": {
